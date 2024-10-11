@@ -8,12 +8,12 @@ namespace FilmesApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CinemaController : ControllerBase
+public class CinemasController : ControllerBase
 {
     private FilmesContext _context;
     private IMapper _mapper;
 
-    public CinemaController(FilmesContext context, IMapper mapper)
+    public CinemasController(FilmesContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -32,13 +32,13 @@ public class CinemaController : ControllerBase
     [HttpGet]
     public IEnumerable<ReadCinemaDTO> RecuperarCinemas()
     {
-        return _mapper.Map<List<ReadCinemaDTO>>(_context.Cinemas.toList());
+        return _mapper.Map<List<ReadCinemaDTO>>(_context.Cinemas.ToList());
     }
 
     [HttpGet("{id}")]
     public IActionResult RecuperaCinemaPorId(int id)
     {
-        Cinema cinema = _context.Cinemas.FirstOrDefault(cinema => cinema.Id == id);
+        Cinema? cinema = _context.Cinemas.FirstOrDefault(c => c.Id == id);
         if (cinema == null) return NotFound();
 
         ReadCinemaDTO cinemaDto = _mapper.Map<ReadCinemaDTO>(cinema);
@@ -48,7 +48,7 @@ public class CinemaController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult AtualizaCinema(int id, [FromBody] UpdateCinemaDTO cinemaDTO)
     {
-        Cinema cinema = _context.Cinema.FirstOrDefault(cinema => cinema.Id == id);
+        Cinema? cinema = _context.Cinemas.FirstOrDefault(cinema => cinema.Id == id);
         if (cinema == null) return NotFound();
 
         _mapper.Map(cinemaDTO, cinema);
@@ -59,7 +59,7 @@ public class CinemaController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeletaCinema(int id)
     {
-        Cinema cinema = _context.Cinema.FirstOrDefault(cinema => cinema.Id == id);
+        Cinema? cinema = _context.Cinemas.FirstOrDefault(cinema => cinema.Id == id);
         if (cinema == null) return NotFound();
 
         _context.Remove(cinema);
