@@ -25,7 +25,7 @@ namespace FilmesApi.Controllers
         {
             Filme filme = _mapper.Map<Filme>(filmeDTO);
 
-            _context.filmes.Add(filme);
+            _context.Filmes.Add(filme);
             _context.SaveChanges();
 
             var readFilmeDTO = _mapper.Map<ReadFilmeDTO>(filme);
@@ -43,12 +43,12 @@ namespace FilmesApi.Controllers
             [FromQuery] int take = 5
         )
         {
-            return _mapper.Map<List<ReadFilmeDTO>>(_context.filmes.Skip(take * skip).Take(take));
+            return _mapper.Map<List<ReadFilmeDTO>>(_context.Filmes.Skip(take * skip).Take(take));
         }
 
         [HttpGet("{id}")]
         public IActionResult BuscarFilmePorId(int id) {
-            var filmeBuscado = _context.filmes.FirstOrDefault((filme) => filme.id == id);
+            var filmeBuscado = _context.Filmes.FirstOrDefault((filme) => filme.id == id);
 
             if (filmeBuscado == null) return NotFound();
             return Ok(filmeBuscado);
@@ -57,7 +57,7 @@ namespace FilmesApi.Controllers
         [HttpPut("{id}")]
         public IActionResult AtualizaFilmePorId(int id, [FromBody] UpdateFilmeDTO filmeDTO)
         {
-            var filmeBuscado = _context.filmes.FirstOrDefault((filme) => filme.id == id);
+            var filmeBuscado = _context.Filmes.FirstOrDefault((filme) => filme.id == id);
 
             if (filmeBuscado == null) return NotFound();
 
@@ -71,7 +71,7 @@ namespace FilmesApi.Controllers
         [HttpPatch("{id}")]
         public IActionResult AtualizaParcialFilmePorId(int id, JsonPatchDocument<UpdateFilmeDTO> patch)
         {
-            var filmeBuscado = _context.filmes.FirstOrDefault((filme) => filme.id == id);
+            var filmeBuscado = _context.Filmes.FirstOrDefault((filme) => filme.id == id);
 
             if (filmeBuscado == null) return NotFound();
 
@@ -90,7 +90,7 @@ namespace FilmesApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeletaFilmePorId(int id)
         {
-            var filmeBuscado = _context.filmes.FirstOrDefault((filme) => filme.id == id);
+            var filmeBuscado = _context.Filmes.FirstOrDefault((filme) => filme.id == id);
 
             if (filmeBuscado == null) return NotFound();
 
