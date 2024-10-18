@@ -9,8 +9,8 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<FilmesContext>(
-    opts => opts.UseSqlServer(builder.Configuration.GetConnectionString("FilmesConnection")
-));
+    opts => opts.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("FilmesConnection"))
+);
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
